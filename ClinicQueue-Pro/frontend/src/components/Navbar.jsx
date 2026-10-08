@@ -1,0 +1,5 @@
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
+import "./components.css";
+export default function Navbar(){const {user,logout}=useContext(AuthContext);const navigate=useNavigate();return <nav className="navbar"><div className="nav-container"><Link to="/" className="nav-logo">✚ ClinicQueue</Link><div className="nav-links"><Link to="/">Home</Link><Link to="/about">About</Link><Link to="/packages">Packages</Link>{user?<><span className="user-name">{user.name}</span>{user.role==="patient"&&<Link to="/dashboard">Dashboard</Link>}{["admin","staff"].includes(user.role)&&<Link to="/admin/dashboard" className="admin-link">Admin</Link>}{["doctor","staff","admin"].includes(user.role)&&<Link to="/doctor/dashboard">Clinical</Link>}<button onClick={()=>{logout();navigate("/")}} className="logout-btn">Logout</button></>:<><Link to="/login" className="btn-small">Login</Link><Link to="/register" className="btn-small btn-primary">Register</Link></>}</div></div></nav>}
